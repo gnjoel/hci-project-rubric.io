@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +10,8 @@
 /* ── Reset & Base ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; scroll-behavior: smooth; }
-body {
-  font-family: 'Karla', sans-serif;
-  background: #0f1117;
-  color: #e8e6df;
-  min-height: 100vh;
-  line-height: 1.6;
-}
 
-/* ── CSS Variables ────────────────────────────────────────── */
+/* ── CSS Variables (Dark Theme - Default) ─────────────────── */
 :root {
   --bg-base:    #0f1117;
   --bg-surface: #181c26;
@@ -54,13 +47,108 @@ body {
 
   --warn-bg:   rgba(255,152,0,0.08);
   --warn-border: rgba(255,152,0,0.3);
+  
+  --title-color: #f0eee8;
 }
+
+/* ── CSS Variables (Light Theme) ──────────────────────────── */
+[data-theme="light"] {
+  --bg-base:    #f8f9fa;
+  --bg-surface: #ffffff;
+  --bg-card:    #f1f3f5;
+  --bg-raised:  #e9ecef;
+  --border:     rgba(0,0,0,0.08);
+  --border-md:  rgba(0,0,0,0.15);
+  --text-primary:   #212529;
+  --text-secondary: #495057;
+  --text-muted:     #868e96;
+  --accent:     #228be6;
+  --accent-dim: rgba(34,139,230,0.1);
+
+  --ex-bg:     rgba(64,192,87,0.15);
+  --ex-border: rgba(64,192,87,0.4);
+  --ex-text:   #2b8a3e;
+  --ex-score:  #2f9e44;
+
+  --go-bg:     rgba(51,154,240,0.15);
+  --go-border: rgba(51,154,240,0.4);
+  --go-text:   #1864ab;
+  --go-score:  #1c7ed6;
+
+  --sa-bg:     rgba(252,196,25,0.2);
+  --sa-border: rgba(252,196,25,0.5);
+  --sa-text:   #b07d00;
+  --sa-score:  #e67700;
+
+  --ni-bg:     rgba(250,82,82,0.15);
+  --ni-border: rgba(250,82,82,0.4);
+  --ni-text:   #c92a2a;
+  --ni-score:  #e03131;
+
+  --warn-bg:   #fff9db;
+  --warn-border: #fcc419;
+  
+  --title-color: #111111;
+}
+
+body {
+  font-family: 'Karla', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Base transitions for smooth theme switching */
+.section-block, .wt-card, .level-cell, .crit-header, .score-entry-row, .comment-row, .totals-section, .total-cell, .header-tag, .meta-chip, .score-select, .score-num-input, .comment-area, .pitfall-box, .section-header {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* ── Theme Toggle Button ──────────────────────────────────── */
+.theme-toggle-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.theme-toggle-btn {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-md);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Karla', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--bg-card);
+  transform: translateY(-1px);
+}
+
+.theme-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+[data-theme="dark"] .icon-moon { display: none; }
+[data-theme="light"] .icon-sun { display: none; }
 
 /* ── Layout ───────────────────────────────────────────────── */
 .page-shell {
   max-width: 1100px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 4rem;
+  position: relative;
 }
 
 /* ── Header ───────────────────────────────────────────────── */
@@ -100,8 +188,9 @@ body {
   font-family: 'Lora', serif;
   font-size: clamp(24px, 4vw, 38px);
   font-weight: 600;
-  color: #f0eee8;
+  color: var(--title-color);
   line-height: 1.25;
+  transition: color 0.3s ease;
 }
 
 .page-subtitle {
@@ -147,6 +236,7 @@ body {
   font-weight: 500;
   border: 1px solid;
   font-family: 'Karla', sans-serif;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 .legend-pill.ex { background: var(--ex-bg); border-color: var(--ex-border); color: var(--ex-text); }
 .legend-pill.go { background: var(--go-bg); border-color: var(--go-border); color: var(--go-text); }
@@ -184,8 +274,8 @@ body {
   border-color: rgba(79,142,247,0.4);
   background: var(--accent-dim);
 }
-.wt-card.total .wt-pct { font-size: 26px; color: #82b4fb; }
-.wt-card.total .wt-label { color: var(--go-text); }
+.wt-card.total .wt-pct { font-size: 26px; color: var(--go-text); }
+.wt-card.total .wt-label { color: var(--go-text); font-weight: 600; }
 
 /* ── Section Block ────────────────────────────────────────── */
 .section-block {
@@ -194,7 +284,6 @@ body {
   border-radius: 6px;
   overflow: hidden;
   margin-bottom: 1.25rem;
-  transition: border-color 0.2s;
 }
 .section-block:hover { border-color: var(--border-md); }
 
@@ -206,7 +295,6 @@ body {
   background: var(--bg-card);
   cursor: pointer;
   user-select: none;
-  transition: background 0.15s;
 }
 .section-header:hover { background: var(--bg-raised); }
 
@@ -356,7 +444,7 @@ body {
 .pitfall-label {
   font-size: 10px; font-weight: 600;
   letter-spacing: 0.08em; text-transform: uppercase;
-  color: #ffb74d;
+  color: var(--sa-score);
   margin-bottom: 5px;
 }
 .pitfall-text {
@@ -481,8 +569,8 @@ body {
 .total-cell.grand {
   background: var(--accent-dim);
 }
-.total-cell.grand .total-cell-label { color: var(--go-text); }
-.total-cell.grand .total-cell-score { font-size: 28px; color: #a8c8fd; }
+.total-cell.grand .total-cell-label { color: var(--go-text); font-weight:600; }
+.total-cell.grand .total-cell-score { font-size: 28px; color: var(--accent); font-weight:600; }
 
 /* ── Overall Comment ──────────────────────────────────────── */
 .overall-comment {
@@ -510,7 +598,7 @@ body {
   font-weight: 500;
   cursor: pointer;
   border: 1px solid;
-  transition: opacity 0.15s, transform 0.1s;
+  transition: opacity 0.15s, transform 0.1s, background-color 0.3s, color 0.3s;
 }
 .btn:hover { opacity: 0.85; }
 .btn:active { transform: scale(0.98); }
@@ -551,7 +639,9 @@ body {
     --sa-bg: #fffbe6; --sa-border: #f59e0b; --sa-text: #7a4f00; --sa-score: #7a4f00;
     --ni-bg: #fff0f0; --ni-border: #e53935; --ni-text: #7f1010; --ni-score: #7f1010;
     --warn-bg: #fffce6; --warn-border: #f59e0b;
+    --title-color: #111;
   }
+  .theme-toggle-wrapper { display: none; }
   .action-bar { display: none; }
   .section-body { display: block !important; }
   .sec-chevron { display: none; }
@@ -573,7 +663,14 @@ body {
 <body>
 <div class="page-shell">
 
-  <!-- ── Header ── -->
+  <div class="theme-toggle-wrapper">
+    <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/></svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd"/></svg>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </div>
+
   <header class="page-header">
     <span class="header-tag">Lecturer Assessment</span>
     <h1 class="page-title">HCI / UX Design Project<br>Grading Rubric</h1>
@@ -586,7 +683,6 @@ body {
     </div>
   </header>
 
-  <!-- ── Legend ── -->
   <div class="legend-bar">
     <div class="legend-pill ex"><span class="legend-dot"></span>Excellent 90–100%</div>
     <div class="legend-pill go"><span class="legend-dot"></span>Good 75–89%</div>
@@ -594,7 +690,6 @@ body {
     <div class="legend-pill ni"><span class="legend-dot"></span>Needs Improvement &lt;60%</div>
   </div>
 
-  <!-- ── Weight Summary ── -->
   <div class="weight-summary">
     <div class="wt-card"><div class="wt-label">Proposal &amp; User Research</div><div class="wt-pct">20%</div></div>
     <div class="wt-card"><div class="wt-label">Ideation &amp; Lo-Fi Prototyping</div><div class="wt-pct">20%</div></div>
@@ -604,7 +699,6 @@ body {
     <div class="wt-card total"><div class="wt-label">Total</div><div class="wt-pct">100%</div></div>
   </div>
 
-  <!-- ════════════ SECTION 1 ════════════ -->
   <div class="section-block" id="s1">
     <div class="section-header" onclick="toggleSection('s1')">
       <span class="sec-num">01</span>
@@ -614,7 +708,6 @@ body {
     </div>
     <div class="section-body open" id="s1-body">
 
-      <!-- 1a -->
       <div class="criterion">
         <div class="crit-header">
           <span class="crit-name">1a. Innovation and Concept</span>
@@ -662,7 +755,6 @@ body {
         </div>
       </div>
 
-      <!-- 1b -->
       <div class="criterion">
         <div class="crit-header">
           <span class="crit-name">1b. User Empathy and Understanding</span>
@@ -710,7 +802,6 @@ body {
         </div>
       </div>
 
-      <!-- 1c -->
       <div class="criterion">
         <div class="crit-header">
           <span class="crit-name">1c. Problem Definition</span>
@@ -766,7 +857,6 @@ body {
     </div>
   </div>
 
-  <!-- ════════════ SECTION 2 ════════════ -->
   <div class="section-block" id="s2">
     <div class="section-header" onclick="toggleSection('s2')">
       <span class="sec-num">02</span>
@@ -850,7 +940,6 @@ body {
     </div>
   </div>
 
-  <!-- ════════════ SECTION 3 ════════════ -->
   <div class="section-block" id="s3">
     <div class="section-header" onclick="toggleSection('s3')">
       <span class="sec-num">03</span>
@@ -925,7 +1014,6 @@ body {
     </div>
   </div>
 
-  <!-- ════════════ SECTION 4 ════════════ -->
   <div class="section-block" id="s4">
     <div class="section-header" onclick="toggleSection('s4')">
       <span class="sec-num">04</span>
@@ -1000,7 +1088,6 @@ body {
     </div>
   </div>
 
-  <!-- ════════════ SECTION 5 ════════════ -->
   <div class="section-block" id="s5">
     <div class="section-header" onclick="toggleSection('s5')">
       <span class="sec-num">05</span>
@@ -1075,7 +1162,6 @@ body {
     </div>
   </div>
 
-  <!-- ════════════ TOTALS DASHBOARD ════════════ -->
   <div class="totals-section">
     <div class="totals-header">Score Summary — Computed from Entered Scores</div>
     <div class="totals-grid">
@@ -1092,7 +1178,6 @@ body {
     </div>
   </div>
 
-  <!-- ════════════ ACTION BAR ════════════ -->
   <div class="action-bar">
     <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
     <button class="btn btn-outline" onclick="expandAll()">Expand All Sections</button>
@@ -1103,9 +1188,30 @@ body {
     <strong>Academic integrity note.</strong> All user research data (interview notes, affinity diagrams, test recordings) must be retained and available upon request. Fabricated or retroactively constructed research artifacts will result in a zero for the affected section. Process documentation carries equal or greater weight than prototype polish — a well-reasoned, evidence-driven project at a modest visual fidelity will outperform a polished prototype built on assumed user needs. Grades are assigned per criterion; partial credit is available at instructor discretion within each performance band. This rubric is provided to students at project kickoff and may be used for self-assessment throughout the semester.
   </div>
 
-</div><!-- /page-shell -->
+</div><script>
+// --- Theme Toggle Logic ---
+const themeToggleBtn = document.getElementById('themeToggle');
+const themeLabel = document.getElementById('themeLabel');
 
-<script>
+// Check saved preference or default to dark
+const savedTheme = localStorage.getItem('hci-rubric-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+updateThemeLabel(savedTheme);
+
+themeToggleBtn.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('hci-rubric-theme', newTheme);
+  updateThemeLabel(newTheme);
+});
+
+function updateThemeLabel(theme) {
+  themeLabel.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+
+// --- Rubric Logic ---
 const weights = {
   s1: { keys: ['s1a','s1b','s1c'], subs: [7,7,6], sectionW: 0.20 },
   s2: { keys: ['s2a','s2b','s2c'], subs: [7,6,7], sectionW: 0.20 },
