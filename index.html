@@ -232,6 +232,56 @@ body.light .page-title {
   letter-spacing: 1px;
 }
 
+/* ── Group Selector ── */
+.group-selector {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: fit-content;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+body.light .group-selector {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+.group-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.group-dropdown {
+  appearance: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border-md);
+  color: var(--text-primary);
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 36px 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239CA3AF'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  min-width: 280px;
+  transition: border-color 0.2s, background-color 0.3s, color 0.3s;
+  outline: none;
+}
+body.light .group-dropdown {
+  background: #FFFFFF;
+}
+.group-dropdown:focus {
+  border-color: var(--accent);
+}
+
 /* ── Legend ───────────────────────────────────────────────── */
 .legend-bar {
   display: flex;
@@ -678,6 +728,8 @@ body.light .btn-primary { color: #fff; }
   .comment-area { border: 1px solid #cbd5e1; min-height: 60px; background: #fff; }
   .score-select, .score-num-input { border: 1px solid #cbd5e1; background: #fff; }
   .wt-card { box-shadow: none; border: 1px solid #cbd5e1; }
+  .group-selector { background: #f8fafc; border: 1px solid #cbd5e1; box-shadow: none; }
+  .group-dropdown { background: #fff; border: 1px solid #cbd5e1; color: #111; }
 }
 
 @media (max-width: 560px) {
@@ -687,6 +739,8 @@ body.light .btn-primary { color: #fff; }
   .crit-header { flex-direction: column; gap: 6px; }
   .score-entry-row { flex-direction: column; align-items: flex-start; }
   .score-select { width: 100%; }
+  .group-selector { flex-direction: column; align-items: flex-start; width: 100%; gap: 8px; }
+  .group-dropdown { width: 100%; min-width: auto; }
 }
 </style>
 </head>
@@ -709,6 +763,23 @@ body.light .btn-primary { color: #fff; }
       <span class="meta-chip">5 sections · 100% total</span>
       <span class="meta-chip">4-level performance scale</span>
       <span class="meta-chip">Version: Instructor Edition</span>
+    </div>
+    
+    <div class="group-selector">
+      <label for="group-select" class="group-label">Group to Evaluate:</label>
+      <select id="group-select" class="group-dropdown">
+        <option value="">— Select a Group —</option>
+        <option value="1">Group 01 — MIZ</option>
+        <option value="2">Group 02 — Design Thinkers</option>
+        <option value="3">Group 03 — The Visionaries</option>
+        <option value="4">Group 04 — RBG</option>
+        <option value="5">Group 05 — The Unity Crew Group</option>
+        <option value="6">Group 06 — Ninja</option>
+        <option value="7">Group 07 — NoClassTomorrow</option>
+        <option value="8">Group 08 — UserVerse</option>
+        <option value="9">Group 09 — ASA Design</option>
+        <option value="10">Group 10 — Group I</option>
+      </select>
     </div>
   </header>
 
@@ -1129,7 +1200,7 @@ body.light .btn-primary { color: #fff; }
       <div class="criterion">
         <div class="crit-header"><span class="crit-name">5a. Presentation Slides</span><span class="crit-pts">Sub-weight: 4 / 15 pts</span></div>
         <div class="levels-grid">
-          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">30–35 slides with a coherent narrative arc: problem context → research → design evolution → accessibility → innovation → impact → key takeaways. Visual hierarchy guides the audience; slides are not text-dense. Presenter does not read from slides. Time managed to within 30 seconds of the allocated window. Q&A demonstrates deep project ownership.</div></div>
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">10–15 slides with a coherent narrative arc: problem context → research → design evolution → accessibility → innovation → impact → key takeaways. Visual hierarchy guides the audience; slides are not text-dense. Presenter does not read from slides. Time managed to within 30 seconds of the allocated window. Q&A demonstrates deep project ownership.</div></div>
           <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Covers all required topics within the slide count. Narrative is mostly coherent with minor organizational gaps. Slides are visually adequate; some may be text-heavy. Delivered with competence; time management within 1 minute of target.</div></div>
           <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Required topics present but not all covered with equal depth. Slides used as speaker notes (dense text, small font). One or more mandatory sections is superficial or missing. Presentation significantly exceeds or falls short of the time limit.</div></div>
           <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">Slide count outside the 10–15 range with no pedagogical justification. Multiple required sections absent. Presenter reads from slides verbatim. Design work is not clearly communicated — audience cannot reconstruct the project from the presentation alone.</div></div>
